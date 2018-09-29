@@ -7,7 +7,8 @@ import * as actions from '../../actions';
 class Home extends PureComponent {
   render() {
     console.log(this.props);
-    this.props.test();
+    console.log(process.env.REACT_APP_API_KEY);
+    this.props.discoverMovies();
     return (
       'Oi'
     );
@@ -18,7 +19,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  test: () =>
+  discoverMovies: () =>
     dispatch(actions.discoverMovies())
 });
 
