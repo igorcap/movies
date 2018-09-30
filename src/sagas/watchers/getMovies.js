@@ -1,4 +1,4 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, all } from 'redux-saga/effects';
 import axios from 'axios';
 
 import * as constants from '../../constants';
@@ -10,10 +10,8 @@ function* workerDiscoverLatestMoviesSaga() {
   const response = yield axios.get(`${baseUrl}/3/discover/movie`, {
     params: {
       api_key: process.env.REACT_APP_API_KEY,
-      sort_by: 'release_date.desc',
-      release_date: {
-        lte: '2018'
-      }
+      sort_by: 'popularity.desc',
+      year: '2018'
     }
   }).then(res => res.data);
   yield put(actions.discoverLatestSucceeded(response));
@@ -26,17 +24,37 @@ function* workerDiscoverTopRatedSaga() {
       sort_by: 'vote_average.desc'
     }
   }).then(res => res.data);
-  yield put(actions.discoverLatestSucceeded(response));
+  yield put(actions.discoverTopRatedSucceeded(response));
 }
 
 function* workerDiscoverPopularSaga() {
   const response = yield axios.get(`${baseUrl}/3/discover/movie`, {
     params: {
       api_key: process.env.REACT_APP_API_KEY,
-      sort_by: 'vote_average.desc'
+      sort_by: 'popularity.desc'
     }
   }).then(res => res.data);
-  yield put(actions.discoverLatestSucceeded(response));
+  yield put(actions.discoverPopularSucceeded(response));
+}
+
+function* workerDiscoverUpComingSaga() {
+  const response = yield axios.get(`${baseUrl}/3/discover/movie`, {
+    params: {
+      api_key: process.env.REACT_APP_API_KEY,
+      sort_by: 'popularity.desc',
+      year: '2019'
+    }
+  }).then(res => res.data);
+  yield put(actions.discoverUpcomingSucceeded(response));
+}
+
+function* workerDiscoverAllSaga() {
+  yield all([
+    workerDiscoverLatestMoviesSaga(),
+    workerDiscoverPopularSaga(),
+    workerDiscoverTopRatedSaga(),
+    workerDiscoverUpComingSaga()
+  ]);
 }
 
 export function* watchGetLatestSaga() {
@@ -49,4 +67,12 @@ export function* watchGetPopularSaga() {
 
 export function* watchGetTopRatedSaga() {
   yield takeLatest(constants.DISCOVER_TOP_RATED, workerDiscoverTopRatedSaga)
+}
+
+export function* watchGetUpComingSaga() {
+  yield takeLatest(constants.DISCOVER_UP_COMING, workerDiscoverUpComingSaga)
+}
+
+export function* watchDiscoverAllSaga() {
+  yield takeLatest(constants.DISCOVER_ALL_MOVIES, workerDiscoverAllSaga)
 }

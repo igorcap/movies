@@ -7,6 +7,10 @@ export const resetMoviesState = () => ({
   type: constants.RESET_MOVIES_STATE
 });
 
+export const discoverAllMovies = () => ({
+  type: constants.DISCOVER_ALL_MOVIES
+});
+
 export const discoverPopular = () => ({
   type: constants.DISCOVER_POPULAR
 });
