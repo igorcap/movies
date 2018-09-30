@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
@@ -7,8 +8,7 @@ import * as actions from '../../actions';
 class Home extends PureComponent {
   render() {
     console.log(this.props);
-    console.log(process.env.REACT_APP_API_KEY);
-    this.props.discoverMovies();
+    this.props.discoverLatest();
     return (
       'Oi'
     );
@@ -18,9 +18,7 @@ class Home extends PureComponent {
 const mapStateToProps = () => ({
 });
 
-const mapDispatchToProps = dispatch => ({
-  discoverMovies: () =>
-    dispatch(actions.discoverMovies())
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

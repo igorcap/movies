@@ -1,9 +1,16 @@
 import { all, fork } from 'redux-saga/effects';
 
-import watchGetMoviesSaga from './watchers/getMovies';
+import {
+  watchGetLatestSaga,
+  watchGetPopularSaga,
+  watchGetTopRatedSaga
+} 
+  from './watchers/getMovies';
 
 export default function* root() {
   yield all([
-    fork(watchGetMoviesSaga),
+    fork(watchGetLatestSaga),
+    fork(watchGetPopularSaga),
+    fork(watchGetTopRatedSaga)
   ]);
 }
