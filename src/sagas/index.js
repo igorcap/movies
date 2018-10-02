@@ -5,8 +5,9 @@ import {
   watchGetPopularSaga,
   watchGetTopRatedSaga,
   watchGetUpComingSaga,
-  watchDiscoverAllSaga
-} 
+  watchDiscoverAllSaga,
+  watchGetMovieDetailSaga
+}
   from './watchers/getMovies';
 
 export default function* root() {
@@ -15,6 +16,7 @@ export default function* root() {
     fork(watchGetPopularSaga),
     fork(watchGetTopRatedSaga),
     fork(watchGetUpComingSaga),
-    fork(watchDiscoverAllSaga)
+    fork(watchDiscoverAllSaga),
+    fork(watchGetMovieDetailSaga)
   ]);
 }

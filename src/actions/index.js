@@ -1,7 +1,4 @@
-import axios from 'axios';
 import * as constants from '../constants';
-
-const baseUrl = 'https://api.themoviedb.org';
 
 export const resetMoviesState = () => ({
   type: constants.RESET_MOVIES_STATE
@@ -67,8 +64,9 @@ export const discoverLatestFailed = error => ({
   payload: error
 });
 
-export const getMovieDetail = () => ({
-  type: constants.GET_MOVIES_DETAILS
+export const getMovieDetail = id => ({
+  type: constants.GET_MOVIES_DETAILS,
+  payload: id
 });
 
 export const getMovieDetailSucceeded = data => ({
@@ -95,26 +93,3 @@ export const searchMoviesFailed = error => ({
   type: constants.SEARCH_MOVIES_FAILED,
   payload: error
 });
-
-export const getLatestMovies = (dispatch) => {
-  return function action() {
-    dispatch({ type: constants.DISCOVER_LATEST });
-    const request = axios({
-      method: 'GET',
-      url: `${baseUrl}/3/discover/movie`,
-      params: {
-        api_key: process.env.REACT_APP_API_KEY,
-        sort_by: 'release_date.desc',
-        release_date: {
-          lte: '2019'
-        }
-      },
-      headers: []
-    });
-    
-    return request.then(
-      response => dispatch(discoverLatestSucceeded(response.data)),
-      err => dispatch(discoverLatestFailed(err))
-    );
-  }
-};

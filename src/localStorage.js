@@ -1,6 +1,6 @@
 export const loadState = () => {
   try {
-    const serializedState = window.localStorage.getItem('movies');
+    const serializedState = window.localStorage.getItem('moviesReducer');
     if (serializedState === null) {
       return undefined;
     }
@@ -13,7 +13,7 @@ export const loadState = () => {
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
-    window.localStorage.setItem('movies', serializedState);
+    window.localStorage.setItem('moviesReducer', serializedState);
   } catch (err) {
     console.log('local storage error', err);
   }

@@ -10,6 +10,7 @@
     "immutable": "^3.8.2",
     "lodash": "^4.17.11",
     "moviedb": "^0.2.10",
+    "nuka-carousel": "^4.4.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
@@ -18,10 +19,12 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.1.4",
+    "react-slick": "^0.23.1",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.16.0",
-    "semantic-ui-react": "^0.81.1"
+    "semantic-ui-react": "^0.81.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "4.19.1",
@@ -35,6 +38,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:fix": "eslint --ext .js --ext .jsx --fix src"
   }
 }

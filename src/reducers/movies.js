@@ -44,13 +44,18 @@ export default function setBrowserInfo(state = initialState, action) {
     case constants.DISCOVER_UP_COMING_SUCCEEDED:
       return {
         ...state,
-        loading: false,        
+        loading: false,
         discover: {
           ...state.discover,
           upcoming: action.payload
         }
       };
     case constants.GET_MOVIES_DETAILS_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        movieDetails: action.payload
+      };
     case constants.SEARCH_MOVIES_SUCCEEDED:
     case constants.SEARCH_MOVIES:
     case constants.DISCOVER_LATEST:
@@ -58,7 +63,7 @@ export default function setBrowserInfo(state = initialState, action) {
       return {
         ...state,
         loading: true
-      }
+      };
     default:
       return state;
   }

@@ -1,5 +1,6 @@
 import { takeLatest, put, all } from 'redux-saga/effects';
 import axios from 'axios';
+import { push } from 'react-router-redux';
 
 import * as constants from '../../constants';
 import * as actions from '../../actions';
@@ -48,6 +49,16 @@ function* workerDiscoverUpComingSaga() {
   yield put(actions.discoverUpcomingSucceeded(response));
 }
 
+function* workerGetMovieDetailSaga(data) {
+  const id = data.payload;
+  const response = yield axios.get(`${baseUrl}/3/movie/${id}`, {
+    params: { api_key: process.env.REACT_APP_API_KEY }
+  }).then(res => res.data);
+  yield put(push('/details'));
+  yield put(actions.getMovieDetailSucceeded(response));
+}
+
+
 function* workerDiscoverAllSaga() {
   yield all([
     workerDiscoverLatestMoviesSaga(),
@@ -62,17 +73,21 @@ export function* watchGetLatestSaga() {
 }
 
 export function* watchGetPopularSaga() {
-  yield takeLatest(constants.DISCOVER_POPULAR, workerDiscoverPopularSaga)
+  yield takeLatest(constants.DISCOVER_POPULAR, workerDiscoverPopularSaga);
 }
 
 export function* watchGetTopRatedSaga() {
-  yield takeLatest(constants.DISCOVER_TOP_RATED, workerDiscoverTopRatedSaga)
+  yield takeLatest(constants.DISCOVER_TOP_RATED, workerDiscoverTopRatedSaga);
 }
 
 export function* watchGetUpComingSaga() {
-  yield takeLatest(constants.DISCOVER_UP_COMING, workerDiscoverUpComingSaga)
+  yield takeLatest(constants.DISCOVER_UP_COMING, workerDiscoverUpComingSaga);
 }
 
 export function* watchDiscoverAllSaga() {
-  yield takeLatest(constants.DISCOVER_ALL_MOVIES, workerDiscoverAllSaga)
+  yield takeLatest(constants.DISCOVER_ALL_MOVIES, workerDiscoverAllSaga);
+}
+
+export function* watchGetMovieDetailSaga() {
+  yield takeLatest(constants.GET_MOVIES_DETAILS, workerGetMovieDetailSaga);
 }
